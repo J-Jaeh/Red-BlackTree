@@ -2,9 +2,18 @@
 
 #include <stdlib.h>
 
+/*
+1. 센티넬 노드생성
+2. 트리초기화 -> 트리의 포인터들이 센티넬노드를 지목하도록.
+*/
 rbtree *new_rbtree(void) {
+  node_t *sentinel = (node_t*)calloc(1,sizeof(node_t));
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-  // TODO: initialize struct if needed
+
+  sentinel->color =RBTREE_BLACK;
+  p->nil = sentinel;
+  p->root = sentinel;
+
   return p;
 }
 

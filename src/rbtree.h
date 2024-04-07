@@ -13,6 +13,8 @@ typedef struct node_t {
   struct node_t *parent, *left, *right;
 } node_t;
 
+
+// 구조체명 생략하고 자료 재정의한것 !
 typedef struct {
   node_t *root;
   node_t *nil;  // for sentinel
