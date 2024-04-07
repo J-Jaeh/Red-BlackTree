@@ -19,14 +19,27 @@ rbtree *new_rbtree(void) {
 
 /* rotation
 받아야할값 .. 일단 target 노드 .. 나는 부모로 올릴 노드를 받고싶은뎅 아닌가 ? 
-
 */
-void right_rotation(rbtree *tree,node_t *x_node)
+void right_rotation(rbtree *tree,node_t *y_node)
 {
+  node_t *temp = y_node -> left;
+
+  y_node -> left = temp -> right;
+
+  if (temp -> right != tree -> nil) temp->right->parent = y_node;
+
+  temp -> parent = y_node -> parent;
+
+  if (y_node->parent == tree->nil) tree->root =temp;
+  else if (y_node->parent->left == y_node) y_node->parent->left = temp;
+  else y_node->parent->right = temp;
+
+  temp -> right = y_node;
+  y_node->parent = temp;
 
 }
 
-void left_rotation(rbtree *tree,node_t *x_node)
+void left_rotation(rbtree *tree,node_t *x_node,)
 {   
   //대상노드의 오른쪽 즉 temp가 x_node 의 부모가 될예정이다. 
   node_t *temp = x_node -> right;
