@@ -111,7 +111,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
   {
     temp_parent->right = new_node;
   }
-
+  new_node -> key = key;
   new_node -> color = RBTREE_RED;
   new_node -> left = t->nil;
   new_node -> right = t->nil;
