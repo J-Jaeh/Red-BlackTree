@@ -198,6 +198,8 @@ int rbtree_erase(rbtree *t, node_t *p) {
 }
 
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  // TODO: implement to_array
+  int limit = 0;
+  int *pl= &limit;
+  to_array(t,t->root,arr,n,pl);
   return 0;
 }
