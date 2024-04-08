@@ -95,9 +95,28 @@ void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
       }
       new_node -> parent -> color = RBTREE_BLACK;
       new_node -> parent -> parent -> color = RBTREE_RED;
-      right_rotation(tree,new_node);
-    }else // mirror case   
+      right_rotation(tree,new_node->parent->parent);
+    }else// mirror case 
+    {
+      node_t *uncle = new_node -> parent -> parent -> left;
+      if (uncle->color == RBTREE_RED)
+      {
+        new_node->parent->color = RBTREE_BLACK;
+        uncle -> color = RBTREE_BLACK;
+        new_node->parent->parent->color = RBTREE_RED;
+
+        new_node=new_node->parent->parent;
+      }else if (new_node == new_node -> parent -> left)
+      {
+        new_node = new_node -> parent;
+        right_rotation(tree,new_node);
+      }
+      new_node -> parent -> color = RBTREE_BLACK;
+      new_node -> parent -> parent -> color = RBTREE_RED;
+      left_rotation(tree,new_node->parent->parent);
+    }  
   }
+  tree->root->color = RBTREE_BLACK;
 }
 
 
@@ -144,6 +163,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
   new_node -> right = t->nil;
 
   //보정작업 함수 호출
+  rbtree_insert_fixup(t,new_node);
   return t->root;
 }
 
