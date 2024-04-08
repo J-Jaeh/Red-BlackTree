@@ -36,10 +36,9 @@ void right_rotation(rbtree *tree,node_t *y_node)
 
   temp -> right = y_node;
   y_node->parent = temp;
-
 }
 
-void left_rotation(rbtree *tree,node_t *x_node,)
+void left_rotation(rbtree *tree,node_t *x_node)
 {   
   //대상노드의 오른쪽 즉 temp가 x_node 의 부모가 될예정이다. 
   node_t *temp = x_node -> right;
