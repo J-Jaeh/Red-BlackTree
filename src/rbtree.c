@@ -164,7 +164,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 
   //보정작업 함수 호출
   rbtree_insert_fixup(t,new_node);
-  return t->root;
+  return new_node;
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key) {
