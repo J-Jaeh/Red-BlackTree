@@ -65,8 +65,15 @@ void left_rotation(rbtree *tree,node_t *x_node)
   x_node->parent = temp;
 }
 
+void delete_all_node(rbtree *t,node_t *delete_node)
+{
+
+}
+
 void delete_rbtree(rbtree *t) {
   // TODO: reclaim the tree nodes's memory
+  node_t *delete_node = t->root;
+  delete_all_node(t,delete_node);
   free(t);
 }
 
