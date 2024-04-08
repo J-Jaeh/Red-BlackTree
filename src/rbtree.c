@@ -88,6 +88,7 @@ void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
         new_node->parent->parent->color = RBTREE_RED;
         //할어버지 검증돌리러감 -> 회전균형까지마치고 확인
         new_node = new_node->parent->parent;
+        continue;
       }else if (new_node == new_node -> parent ->right)
       {
         new_node = new_node -> parent;
@@ -106,6 +107,7 @@ void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
         new_node->parent->parent->color = RBTREE_RED;
 
         new_node=new_node->parent->parent;
+        continue;
       }else if (new_node == new_node -> parent -> left)
       {
         new_node = new_node -> parent;
