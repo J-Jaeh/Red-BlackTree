@@ -70,8 +70,53 @@ void delete_rbtree(rbtree *t) {
   free(t);
 }
 
+
+/*
+삽입후 rbtree 규칙을 깨는 경우 벨런싱 작업을 해줘야함
+1. root 노드가 RED로 되는경우 
+2. 삽입한곳의 부모가 RED 인경우
+---
+- 삽입과정중 중복key 검사해야함. 중복key 검사통과해야지 calloc 할당.
+*/
 node_t *rbtree_insert(rbtree *t, const key_t key) {
-  // TODO: implement insert
+  node_t *temp_parent = t->nil;
+  node_t *search_leaf = t->root;
+  //nil 까지 들어가서 그전에 나온 부모가 삽입위치임
+  while (search_leaf != t->nil)
+  {
+      temp_parent=search_leaf;
+      if (key == search_leaf->key) // 이미 존재 하는 키값
+      {
+        return search_leaf;
+      }
+      else if (key < search_leaf->key) // 삽입값이 현재 키값보다 작으면 
+      {
+        search_leaf = search_leaf -> left;
+      }else
+      {
+        search_leaf = search_leaf -> right;
+      }
+  }
+  // 삽입위치 찾음
+  node_t *new_node = (node_t*)calloc(1,sizeof(node_t));
+  new_node -> parent = temp_parent;
+
+  if (temp_parent == t->nil)
+  {
+    t->root = new_node;
+  }else if (key < temp_parent->key)
+  {
+    temp_parent->left = new_node;
+  }else
+  {
+    temp_parent->right = new_node;
+  }
+
+  new_node -> color = RBTREE_RED;
+  new_node -> left = t->nil;
+  new_node -> right = t->nil;
+
+  //보정작업 함수 호출
   return t->root;
 }
 
