@@ -107,7 +107,8 @@ void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
 1. root 노드가 RED로 되는경우 
 2. 삽입한곳의 부모가 RED 인경우
 ---
-- 삽입과정중 중복key 검사해야함. 중복key 검사통과해야지 calloc 할당.
+- 삽입과정중 중복key 검사해야함. 중복key 검사통과해야지 calloc 할당 => x 중복키 삽입가능임
+-- 중복키가 나온다면 오른쪽으로 보내줘서 크기 검사시켜야 중위순회때 잘나올듯? 
 */
 node_t *rbtree_insert(rbtree *t, const key_t key) {
   node_t *temp_parent = t->nil;
@@ -116,14 +117,10 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
   while (search_leaf != t->nil)
   {
       temp_parent=search_leaf;
-      if (key == search_leaf->key) // 이미 존재 하는 키값
-      {
-        return search_leaf;
-      }
-      else if (key < search_leaf->key) // 삽입값이 현재 키값보다 작으면 
+      if (key < search_leaf->key) // 삽입값이 현재 키값보다 작으면 
       {
         search_leaf = search_leaf -> left;
-      }else
+      }else // 같거나 크면 오른쪽으로감 !
       {
         search_leaf = search_leaf -> right;
       }
