@@ -197,7 +197,20 @@ int rbtree_erase(rbtree *t, node_t *p) {
   return 0;
 }
 
+// 재귀로 리턴하면서 넣기 ? 
+void *to_array(const rbtree *t,node_t *node,key_t *arr,const size_t n,int *limit)
+{
+  if (node != t->nil && *limit<n)
+  {
+    to_array(t,node->left,arr,n,limit);
+    arr[(*limit)++] = node -> key;
+    to_array(t,node->right,arr,n,limit);
+  }
+}
+
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  // TODO: implement to_array
+  int limit = 0;
+  int *pl= &limit;
+  to_array(t,t->root,arr,n,pl);
   return 0;
 }
