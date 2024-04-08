@@ -65,8 +65,21 @@ void left_rotation(rbtree *tree,node_t *x_node)
   x_node->parent = temp;
 }
 
+void delete_all_node(rbtree *t,node_t *delete_node)
+{
+  if(delete_node != t->nil)
+  {
+    delete_all_node(t,delete_node->left);
+    delete_all_node(t,delete_node->right);
+    free(delete_node);
+  }
+}
+
 void delete_rbtree(rbtree *t) {
   // TODO: reclaim the tree nodes's memory
+  node_t *delete_node = t->root;
+  delete_all_node(t,delete_node);
+  free(t->nil);
   free(t);
 }
 
@@ -86,7 +99,7 @@ void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
         new_node->parent->color = RBTREE_BLACK;
         uncle -> color = RBTREE_BLACK;
         new_node->parent->parent->color = RBTREE_RED;
-        //할어버지 검증돌리러감 -> 회전균형까지마치고 확인
+        //할어버지 검증돌리러감
         new_node = new_node->parent->parent;
         continue;
       }else if (new_node == new_node -> parent ->right)
