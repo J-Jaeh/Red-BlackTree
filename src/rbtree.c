@@ -70,6 +70,37 @@ void delete_rbtree(rbtree *t) {
   free(t);
 }
 
+// 재귀로 구현해도 할만할듯!
+void rbtree_insert_fixup(rbtree *tree, node_t *new_node)
+{
+  while(new_node -> parent -> color == RBTREE_RED)
+  {
+    // 부모가 할아버지 왼쪽일경우
+    if (new_node -> parent == new_node -> parent -> parent-> left)
+    {
+      node_t *uncle = new_node -> parent -> parent -> right;
+      // 부모와 삼촌이 색이 같은 Red일 경우
+      if (uncle->color==RBTREE_RED)
+      {
+        //부모,삼촌 / 할아버지 컬러체인지
+        new_node->parent->color = RBTREE_BLACK;
+        uncle -> color = RBTREE_BLACK;
+        new_node->parent->parent->color = RBTREE_RED;
+        //할어버지 검증돌리러감 
+        new_node = new_node->parent->parent;
+        continue;
+      }else if (new_node == new_node -> parent ->right)
+      {
+        new_node = new_node -> parent;
+        left_rotation(tree,new_node);
+      }
+      new_node -> parent -> color = RBTREE_BLACK;
+      new_node -> parent -> parent -> color = RBTREE_RED;
+      right_rotation(tree,new_node);
+    }else // mirror case   
+  }
+}
+
 
 /*
 삽입후 rbtree 규칙을 깨는 경우 벨런싱 작업을 해줘야함
