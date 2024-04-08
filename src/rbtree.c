@@ -67,7 +67,12 @@ void left_rotation(rbtree *tree,node_t *x_node)
 
 void delete_all_node(rbtree *t,node_t *delete_node)
 {
-
+  if(delete_node != t->nil)
+  {
+    delete_all_node(t,delete_node->left);
+    delete_all_node(t,delete_node->right);
+    free(delete_node);
+  }
 }
 
 void delete_rbtree(rbtree *t) {
