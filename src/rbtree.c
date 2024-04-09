@@ -216,14 +216,22 @@ node_t *rbtree_find(const rbtree *t, const key_t key)
 
 node_t *rbtree_min(const rbtree *t)
 {
-  // TODO: implement find
-  return t->root;
+  node_t *serach = t->root;
+  while (serach->left != t->nil)
+  {
+    serach = serach->left;
+  }
+  return serach;
 }
 
 node_t *rbtree_max(const rbtree *t)
 {
-  // TODO: implement find
-  return t->root;
+  node_t *serach = t->root;
+  while (serach->right != t->nil)
+  {
+    serach = serach->right;
+  }
+  return serach;
 }
 
 void rbtree_transplant(rbtree *tree, node_t *target, node_t *changed_node)
