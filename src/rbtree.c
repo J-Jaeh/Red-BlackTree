@@ -205,6 +205,12 @@ node_t *rbtree_max(const rbtree *t) {
   return t->root;
 }
 
+void rbtree_transplant(rbtree *tree,node_t *target,node_t changed_node)
+{
+  
+}
+
+
 int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
   return 0;
