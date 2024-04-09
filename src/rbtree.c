@@ -214,6 +214,14 @@ void rbtree_transplant(rbtree *tree,node_t *target,node_t changed_node)
   changed_node->parent = target_node -> parent;
 }
 
+node_t *right_subtree_min_node(rbtree *tree,node_t *min_node)
+{
+  while(min_node != tree->nil)
+  {
+    min_node = min_node ->left;
+  }
+  return min_node;
+}
 
 int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
