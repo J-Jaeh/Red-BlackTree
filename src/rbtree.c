@@ -227,7 +227,7 @@ node_t *rbtree_min(const rbtree *t)
 node_t *rbtree_max(const rbtree *t)
 {
   node_t *serach = t->root;
-  while (serach->left != t->nil)
+  while (serach->right != t->nil)
   {
     serach = serach->right;
   }
