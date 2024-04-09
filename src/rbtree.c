@@ -262,8 +262,42 @@ void rbtree_delete_fixup(rbtree *tree, node_t target_node)
       brother_node -> right -> color = RBTREE_BLACK;
       left_rotation(tree,target_node->parent);
       target_node = tree -> root;
-    }
+    }//mirror case
+     else
+     {
+      node_t *brother_node = target_node -> parent ->left;
+      //case 1
+      if(brother_node -> color == RBTREE_RED)
+      {
+        brother_node -> color = RBTREE_BLACK;
+        brother_node -> parent -> color = RBTREE_RED;
+        right_rotation(tree,b)
+        brother_node = target_node -> parent -> left;
+      }
+      //case 2
+      if((brother_node -> right -> color == RBTREE_BLACK) && (brother_node -> left -> color == RBTREE_BLACK))
+      {
+        brother_node->color = RBTREE_RED;
+        target_node = target_node -> parent;
+        continue;
+      }// case 3
+      else if (brother_node -> left -> color == RBTREE_BLACK)
+      {
+        brother_node -> right -> color =RBTREE_BLACK;
+        brother_node -> color = RBTREE_RED;
+
+        left_rotation(tree,brother_node);
+        brother_node = target_node -> parent -> right;
+      }
+      //case 4
+      brother_node -> color = target_node -> parent -> color;
+      target_node -> parent -> color = RBTREE_BLACK;
+      brother_node -> left -> color = RBTREE_BLACK;
+      right_rotation(tree,target_node->parent);
+      target_node = tree -> root;
+     }
   }
+ 
   target_node -> color = RBTREE_BLACK;
 }
 
