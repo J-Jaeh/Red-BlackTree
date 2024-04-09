@@ -207,7 +207,11 @@ node_t *rbtree_max(const rbtree *t) {
 
 void rbtree_transplant(rbtree *tree,node_t *target,node_t changed_node)
 {
-  
+  if(target->parent == tree->nil) tree->root = changed_node;
+  else if (target == target->parent->left) target->parent->left = changed_node;
+  else target->parent->right = changed_node;
+
+  changed_node->parent = target_node -> parent;
 }
 
 
