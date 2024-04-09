@@ -223,6 +223,11 @@ node_t *right_subtree_min_node(rbtree *tree,node_t *min_node)
   return min_node;
 }
 
+void rbtree_delete_fixup(rbtree *tree, node_t target_node)
+{
+  
+}
+
 int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
   return 0;
