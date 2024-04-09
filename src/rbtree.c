@@ -216,8 +216,12 @@ node_t *rbtree_find(const rbtree *t, const key_t key)
 
 node_t *rbtree_min(const rbtree *t)
 {
-  // TODO: implement find
-  return t->root;
+  node_t *serach = t->root;
+  while (serach->left != t->nil)
+  {
+    serach = serach->left;
+  }
+  return serach;
 }
 
 node_t *rbtree_max(const rbtree *t)
