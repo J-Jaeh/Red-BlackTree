@@ -225,7 +225,46 @@ node_t *right_subtree_min_node(rbtree *tree,node_t *min_node)
 
 void rbtree_delete_fixup(rbtree *tree, node_t target_node)
 {
-  
+  // 블랙-블랙인경우만 while 
+  while((target_node != tree->root) && (target -> color == RBTREE_BLACK))
+  {
+    //  삭제노드가 부모의 왼쪽
+    if (target_node == target_node -> parent -> left)
+    {
+      node_t *brother_node = target_node -> parent ->right;
+
+      // case 1 형제노드의 컬러가 레드일경우 -> 부모를 레드-블랙 으로 만들기
+      if (brother_node -> color == RBTREE_RED)
+      {
+        brother_node -> color = RBTREE_BLACK;
+        brother_node -> parent -> color = RBTREE_RED;
+        left_rotation(tree,brother_node -> parent);
+        brother_node = target_node -> parent -> right;
+      }
+      // case 2 형제노드 bb and 자식 두명다 b 일경우 (case 1 -> case 2 모두 거치면 정렬완료)
+      if((brother_node -> left -> color == RBTREE_BLACK) && (brother_node -> right -> color == RBTREE_BLACK))
+      {
+        brother_node->color = RBTREE_RED;
+        target_node = target_node -> parent;
+        continue;
+      }// case 3 형제노드의 자식중 왼쪽이 red 일경우. -> case 4로 만들기위한 case
+      else if (brother_node -> right -> color == RBTREE_BLACK)
+      {
+        brother_node -> left -> color = RBTREE_BLACK;
+        brother_node -> color = RBTREE_RED;
+
+        right_rotation(tree,brother_node);
+        brother_node = target_node -> parent -> right;
+      }
+      // case 4 형제노드의 자식중 오른쪽이 red 인경우 
+      brother_node -> color = target_node -> parent -> color;
+      target_node -> parent -> color = RBTREE_BLACK;
+      brother_node -> right -> color = RBTREE_BLACK;
+      left_rotation(tree,target_node->parent);
+      target_node = tree -> root;
+    }
+  }
+  target_node -> color = RBTREE_BLACK;
 }
 
 int rbtree_erase(rbtree *t, node_t *p) {
