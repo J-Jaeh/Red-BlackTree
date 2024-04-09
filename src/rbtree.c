@@ -18,67 +18,76 @@ rbtree *new_rbtree(void) {
 }
 
 /* rotation
-받아야할값 .. 일단 target 노드 .. 나는 부모로 올릴 노드를 받고싶은뎅 아닌가 ? 
+받아야할값 .. 일단 target 노드 .. 나는 부모로 올릴 노드를 받고싶은뎅 아닌가 ?
 */
-void right_rotation(rbtree *tree,node_t *y_node)
+void right_rotation(rbtree *tree, node_t *y_node)
 {
-  node_t *temp = y_node -> left;
+  node_t *temp = y_node->left;
 
-  y_node -> left = temp -> right;
+  y_node->left = temp->right;
 
-  if (temp -> right != tree -> nil) temp->right->parent = y_node;
+  if (temp->right != tree->nil)
+    temp->right->parent = y_node;
 
-  temp -> parent = y_node -> parent;
+  temp->parent = y_node->parent;
 
-  if (y_node->parent == tree->nil) tree->root =temp;
-  else if (y_node->parent->left == y_node) y_node->parent->left = temp;
-  else y_node->parent->right = temp;
+  if (y_node->parent == tree->nil)
+    tree->root = temp;
+  else if (y_node->parent->left == y_node)
+    y_node->parent->left = temp;
+  else
+    y_node->parent->right = temp;
 
-  temp -> right = y_node;
+  temp->right = y_node;
   y_node->parent = temp;
 }
 
-void left_rotation(rbtree *tree,node_t *x_node)
-{   
-  //대상노드의 오른쪽 즉 temp가 x_node 의 부모가 될예정이다. 
-  node_t *temp = x_node -> right;
-  
-  //내릴대상의 오른쪽에  올릴 대상의 왼쪽 서브트리를 붙여준다
-  x_node ->right = temp -> left;
+void left_rotation(rbtree *tree, node_t *x_node)
+{
+  // 대상노드의 오른쪽 즉 temp가 x_node 의 부모가 될예정이다.
+  node_t *temp = x_node->right;
+
+  // 내릴대상의 오른쪽에  올릴 대상의 왼쪽 서브트리를 붙여준다
+  x_node->right = temp->left;
 
   // 근데 올릴 대상의 왼쪽 서비트리가 nil노드가 아니라면 왼쪽 서브트리의 부모 바꿔줘야지~
-  if (temp->left != tree->nil) temp->left->parent = x_node;
-  
-  //temp 의 부모는 지금  x 인데 x의 부모가 temp의 부모가되고 x의 부모는 temp가 되는것
-  temp -> parent = x_node -> parent;
+  if (temp->left != tree->nil)
+    temp->left->parent = x_node;
+
+  // temp 의 부모는 지금  x 인데 x의 부모가 temp의 부모가되고 x의 부모는 temp가 되는것
+  temp->parent = x_node->parent;
 
   /*
-  x의 부모가 누군지 검증 + x가 왼쪽소속인지 오른쪽소속인지 
+  x의 부모가 누군지 검증 + x가 왼쪽소속인지 오른쪽소속인지
   근데 이걸 왜 temp의 부모까지 바꿔주고 하는지는 의문
   */
-  if (x_node->parent == tree->nil) tree->root = temp; //tree의 root가 그전에는 x를 가리키고 있엇겠쥬
-  else if (x_node->parent->left == x_node) x_node->parent->left = temp;
-  else x_node->parent->right = temp;
+  if (x_node->parent == tree->nil)
+    tree->root = temp; // tree의 root가 그전에는 x를 가리키고 있엇겠쥬
+  else if (x_node->parent->left == x_node)
+    x_node->parent->left = temp;
+  else
+    x_node->parent->right = temp;
 
   // temp 를 x의 부모만들기 .
   temp->left = x_node;
   x_node->parent = temp;
 }
 
-void delete_all_node(rbtree *t,node_t *delete_node)
+void delete_all_node(rbtree *t, node_t *delete_node)
 {
-  if(delete_node != t->nil)
+  if (delete_node != t->nil)
   {
-    delete_all_node(t,delete_node->left);
-    delete_all_node(t,delete_node->right);
+    delete_all_node(t, delete_node->left);
+    delete_all_node(t, delete_node->right);
     free(delete_node);
   }
 }
 
-void delete_rbtree(rbtree *t) {
+void delete_rbtree(rbtree *t)
+{
   // TODO: reclaim the tree nodes's memory
   node_t *delete_node = t->root;
-  delete_all_node(t,delete_node);
+  delete_all_node(t, delete_node);
   free(t->nil);
   free(t);
 }
