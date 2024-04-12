@@ -391,7 +391,6 @@ void to_array(const rbtree *t, node_t *node, key_t *arr, const size_t n, int *li
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n)
 {
   int limit = 0;
-  int *pl = &limit;
-  to_array(t, t->root, arr, n, pl);
+  to_array(t, t->root, arr, n, &limit);
   return 0;
 }
